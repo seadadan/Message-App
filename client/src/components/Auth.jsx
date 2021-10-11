@@ -2,9 +2,26 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 import singinImage from '../assets/signup.jpg'
+const initialState ={
+	fullname:"",
+	username:"",
+	password:"",
+	confirmPassword:"",
+	phoneNumber:"",
+	avatarURl:"",
+}
+
 const Auth = () => {
+const [form,setForm] =useState();
 const [isSignup,setIsSignup] =useState(false);
-const handleChange=()=>{}
+const handleChange=(e)=>{
+	setForm({...form,[e.target.name]:e.target.value})
+	
+}
+const handleSubmit=(e)=>{
+	e.preventDefault();
+	console.log(form)
+}
 const switchMode = () => {
 	setIsSignup((prevIsSignup)=>!prevIsSignup)
 }
@@ -13,7 +30,7 @@ return (
 	<div className="auth__form-container_fields">
 	   <div className=" auth__form-container_fields-content">
                  <p>{isSignup ? 'Sign Up' : 'Sign In'}</p>  
-		   <form onSubmit={()=> {}}>
+		   <form onSubmit={handleSubmit}>
 			  {isSignup &&(
 				  <div className=" auth__form-container_fields-content_input">
                                          <label htmlFor="fullname">Full Name</label>
@@ -92,7 +109,9 @@ return (
 					</div>
 					    )}
 
-
+                                             <div className=" auth__form-container_fields-content_button">
+						     <button>{isSignup ? "sing Up":"sing In"}</button>
+					     </div>
 					
 
 				    </form>
