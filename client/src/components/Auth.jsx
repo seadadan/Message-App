@@ -1,26 +1,31 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import axios from 'axios'
 
 import singinImage from '../assets/signup.jpg'
-const initialState ={
-	fullname:"",
-	username:"",
-	password:"",
-	confirmPassword:"",
-	phoneNumber:"",
-	avatarURl:"",
-}
 
-const Auth = () => {
-const [form,setForm] =useState();
-const [isSignup,setIsSignup] =useState(false);
-const handleChange=(e)=>{
-	setForm({...form,[e.target.name]:e.target.value})
-	
-}
+
+function Auth() {
+
+	const [user,setUser]=useState({
+		fullname:"",
+		username:"",
+		password:"",
+		confirmPassword:"",
+		phoneNumber:"",
+		avatarURl:"",
+	});
+
+	function signUp(){
+		axios
+		.post("http://localhost:7999/api/auth",user)
+		.then((res)=>console.log(res));
+
+	}
+const [isSignup,setIsSignup] =useState(true);
+
 const handleSubmit=(e)=>{
 	e.preventDefault();
-	console.log(form)
+	console.log(user)
 }
 const switchMode = () => {
 	setIsSignup((prevIsSignup)=>!prevIsSignup)
@@ -38,7 +43,7 @@ return (
 					 name="fullname"
 				         type="text"
 					 placeholder="Full Name"
-					 onChange={handleChange}
+					 onChange={(e) =>setUser({...user, fullname: e.target.value})}
 					required
 					 />
 
@@ -51,7 +56,7 @@ return (
 					 name="username"
 					 type="text"
 					 placeholder="username"
-					 onChange={handleChange}
+					 onChange={(e) =>setUser({...user, username: e.target.value})}
 					 required
 					 />
 
@@ -63,7 +68,7 @@ return (
 					 name="phoneNumber"
 				         type="text"
 					 placeholder="phone Number"
-					 onChange={handleChange}
+					 onChange={(e) =>setUser({...user, phoneNumber: e.target.value})}
 					required
 					 />
 
@@ -76,7 +81,7 @@ return (
 					 name="avatarURl"
 				         type="text"
 					 placeholder="avatar URl"
-					 onChange={handleChange}
+					 onChange={(e) =>setUser({...user, avatarURl: e.target.value})}
 					required
 					 />
 
@@ -89,7 +94,7 @@ return (
 					 name="password"
 				         type="password"
 					 placeholder="password"
-					 onChange={handleChange}
+					 onChange={(e) =>setUser({...user, password: e.target.value})}
 					required
 					 />
 
@@ -102,7 +107,7 @@ return (
 					 name="confirmPassword"
 				         type="password"
 					 placeholder="Confirm Password"
-					 onChange={handleChange}
+					 onChange={(e) =>setUser({...user, password: e.target.value})}
 					required
 					 />
 
@@ -110,7 +115,7 @@ return (
 					    )}
 
                                              <div className=" auth__form-container_fields-content_button">
-						     <button>{isSignup ? "sing Up":"sing In"}</button>
+						     <button onClick={()=>signUp()}>{isSignup ? "sing Up":"sing In" }</button>
 					     </div>
 					
 

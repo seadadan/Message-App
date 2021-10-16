@@ -1,18 +1,15 @@
 const express = require('express');
 const cors =require('cors');
-const authRouter = require('./routes/auth.js')
+const bodyParser = require('body-parser')
+require('dotenv').config({path:'./config.env'});
+require('./server')
 const app=express();
-const port=process.env.PORT || 7999;
-require('dotenv').config();
+
 app.use(cors());
+app.use(bodyParser());
 app.use(express.json());
-app.use(express.urlencoded()); 
-
-app.get('/', (req, res) => {
-	res.send('hello world');
-});
-
-app.use('/auth',authRouter)
-
+const authRouter = require('./routes/auth.js')
+app.use('/api/auth',authRouter)
+const port=process.env.port
 app.listen(port,()=>console.log(`listening on port ${port}`));
 
