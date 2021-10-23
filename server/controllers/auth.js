@@ -30,8 +30,28 @@ exports.saveUser = async (req, res) => {
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
-  
+
 };
+
+  exports.signin = async (req, res) => {
+    try {
+      
+      const user = await User.findOne({ username: req.body.username });
+      if (user === null) {
+        return res.status(400).json({ message: "user does not exsist" });
+      }
+  
+      //2. password database same pass
+      const compare = await bcrypt.compare(req.body.password, user.password);
+      if (compare === false) {
+        return res.status(400).json({ message: "Wrong password" });
+      }
+      res.status(200).json({ message: "logged in" });
+    } catch (e) {
+      res.status(404).json({ message: "error" });
+    }
+
+  };
 exports.editUser = (req, res) => {
   res.status(200).json({ message: "edit users" });
 };

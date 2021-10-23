@@ -1,10 +1,11 @@
 import  { useState } from 'react'
 import axios from 'axios'
+import { toast } from "react-toastify";
 
 import singinImage from '../assets/signup.jpg'
 
 
-function Auth() {
+function AuthsignUp() {
 
 	const [user,setUser]=useState({
 		fullname:"",
@@ -21,7 +22,15 @@ function Auth() {
 		.then((res)=>console.log(res));
 
 	}
-const [isSignup,setIsSignup] =useState(true);
+
+	function login() {
+		//code
+		axios
+		  .post("http://localhost:7999/api/auth/signin", user)
+		  .then((res) => toast.success("User logged in"))
+		  .catch((e) => toast.error(e.response.data.message));
+	      }
+const [isSignup,setIsSignup] =useState(false);
 
 const handleSubmit=(e)=>{
 	e.preventDefault();
@@ -115,7 +124,7 @@ return (
 					    )}
 
                                              <div className=" auth__form-container_fields-content_button">
-						     <button onClick={()=>signUp()}>{isSignup ? "sing Up":"sing In" }</button>
+						     <button onClick={()=>{isSignup ? signUp():login()}}>{isSignup ? "sing Up":"sing In" }</button>
 					     </div>
 					
 
@@ -143,4 +152,4 @@ return (
 	)
 }
 
-export default Auth
+export default AuthsignUp
