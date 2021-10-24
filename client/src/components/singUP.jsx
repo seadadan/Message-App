@@ -1,6 +1,6 @@
 import  { useState } from 'react'
 import axios from 'axios'
-import { toast } from "react-toastify";
+import { Login } from '../components';
 
 import singinImage from '../assets/signup.jpg'
 
@@ -23,29 +23,21 @@ function AuthsignUp() {
 
 	}
 
-	function login() {
-		//code
-		axios
-		  .post("http://localhost:7999/api/auth/signin", user)
-		  .then((res) => toast.success("User logged in"))
-		  .catch((e) => toast.error(e.response.data.message));
-	      }
-const [isSignup,setIsSignup] =useState(false);
+	
+
 
 const handleSubmit=(e)=>{
 	e.preventDefault();
 	console.log(user)
 }
-const switchMode = () => {
-	setIsSignup((prevIsSignup)=>!prevIsSignup)
-}
+
 return (
   <div className="auth__form-container">
 	<div className="auth__form-container_fields">
 	   <div className=" auth__form-container_fields-content">
-                 <p>{isSignup ? 'Sign Up' : 'Sign In'}</p>  
+                 <p> 'Sign Up' </p>  
 		   <form onSubmit={handleSubmit}>
-			  {isSignup &&(
+			  
 				  <div className=" auth__form-container_fields-content_input">
                                          <label htmlFor="fullname">Full Name</label>
 					 <input
@@ -57,7 +49,7 @@ return (
 					 />
 
 					</div>
-					    )}
+					    
 
 			          <div className=" auth__form-container_fields-content_input">
                                         <label htmlFor="username">username</label>
@@ -70,7 +62,7 @@ return (
 					 />
 
 					</div>
-					{isSignup &&(
+					
 				  <div className=" auth__form-container_fields-content_input">
                                          <label htmlFor="phoneNumber">phone Number</label>
 					 <input
@@ -82,8 +74,8 @@ return (
 					 />
 
 					</div>
-					    )}
-					     {isSignup &&(
+					    
+					     
 				  <div className=" auth__form-container_fields-content_input">
                                          <label htmlFor="avatarURl">Avatar URL</label>
 					 <input
@@ -95,7 +87,7 @@ return (
 					 />
 
 					</div>
-					    )}
+					  
 					   
 				  <div className=" auth__form-container_fields-content_input">
                                          <label htmlFor="password">Password</label>
@@ -109,7 +101,7 @@ return (
 
 					</div>
 					   
-					{isSignup &&(
+					
 				  <div className=" auth__form-container_fields-content_input">
                                          <label htmlFor="confirmPassword">Confirm Password</label>
 					 <input
@@ -121,10 +113,10 @@ return (
 					 />
 
 					</div>
-					    )}
+					    
 
                                              <div className=" auth__form-container_fields-content_button">
-						     <button onClick={()=>{isSignup ? signUp():login()}}>{isSignup ? "sing Up":"sing In" }</button>
+						     <button onClick={()=> signUp()}> sing Up</button>
 					     </div>
 					
 
@@ -132,13 +124,12 @@ return (
 
 				    <div className=" auth__form-container_fields-account">
 					    <p>
-						    {isSignup
-						    ?"Already have an account?"
-						    :"Don't have an account?"
-						    }
-						    <span onClick={switchMode}>
-                                                        {isSignup? 'Sign In' : 'sign Up'}
-						    </span>
+						    
+						    Already have an account?
+						
+			
+						 
+						    
 					    </p>
 				    </div>
 				</div>
