@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt= require("jsonwebtoken")
 
 exports.getUsers = async (req, res) => {
   try {
@@ -17,7 +18,7 @@ exports.saveUser = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    await User.create({
+     const createdUser = await User.create({
     
       fullname:req.body.fullname,
       username:req.body.username,
@@ -26,7 +27,8 @@ exports.saveUser = async (req, res) => {
       phoneNumber:req.body.phoneNumber,
       avatarURl:req.body.avatarURl,
     });
-    res.status(201).json({ message: "created user" });
+    const token = jwt.sign({ id: createdUser._id, username: createdUser.username,phoneNumber:createdUser.phoneNumber },"HunterxHunter");
+    res.status(201).json({ message: "created user",token });
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
@@ -46,9 +48,11 @@ exports.saveUser = async (req, res) => {
       if (compare === false) {
         return res.status(400).json({ message: "Wrong password" });
       }
-      res.status(200).json({ message: "logged in" });
+      user.password = undefined;
+      const token = jwt.sign({ id: user._id, username: user.username,phoneNumber:user.phoneNumber },"HunterxHunter");
+      res.status(200).json({ message: "logged in" ,user,token });
     } catch (e) {
-      res.status(404).json({ message: "error" });
+      res.status(400).json({ message: e.message });
     }
 
   };

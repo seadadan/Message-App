@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import singinImage from '../assets/signup.jpg'
 import {AuthsignUp} from "../components"
 
+
 function Login() {
   const [user, setUser] = useState({
     username: "",
@@ -16,8 +17,12 @@ function Login() {
     //code
     axios
       .post("http://localhost:7999/api/auth/signin", user)
-      .then((res)=>console.log(res))
-      .then((res) => toast.success("User logged in"))
+      .then((res)=>{
+       localStorage.setItem("user", JSON.stringify(res.data.user))
+       localStorage.setItem("token",JSON.stringify(res.data.token));
+       toast.success("User logged in");
+       
+      })
       .catch((e) => toast.error(e.response.data.message));
   }
   const handleSubmit=(e)=>{
