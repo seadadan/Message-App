@@ -1,24 +1,35 @@
 import React from 'react'
-
-
-
 import { ChannelListContainer,ChannelContainer,AuthsignUp,Login} from './components';
 import  './App.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
-const authToken=false;
+
+const token =JSON.parse(localStorage.getItem('token'));		
 const App = () => {
-	if (!authToken) return <Login />;
+	if (!token) return <Login />;
 	return (
 		<div className="app__wrapper">
 			
 				<ChannelListContainer/>
 
 
-				<ChannelContainer/>
-			
-		    
+				
+			 <ChannelContainer/>
+				<ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      /> 
 		</div>
+		
 	)
 }
 
