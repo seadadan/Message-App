@@ -7,6 +7,7 @@ import singinImage from '../assets/signup.jpg'
 import {AuthsignUp} from "../components"
 
 
+
 function Login() {
   const [user, setUser] = useState({
     username: "",
@@ -73,6 +74,11 @@ function Login() {
 
                                              <div className=" auth__form-container_fields-content_button">
 						     <button onClick={()=> login()}> Login </button>
+					     </div>
+
+
+					     <div className=" auth__form-container_fields-content_button">
+						<button> Signup </button>
 					     </div>
 					
                                 
